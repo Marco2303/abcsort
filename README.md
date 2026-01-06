@@ -16,7 +16,7 @@ Don't judge me for this.
 # Compile it 
 On Linux
 ~~~
- gcc -W -Wall -O2 -std=c17 abcsort.c -o abcsort-linux-x64 
+ gcc -W -Wall -O2 -std=c17 abcsort.c bouble.c -o abcsort-linux-x64 
 ~~~
 
 # Disclaimer
