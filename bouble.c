@@ -21,29 +21,38 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "struct.h"
+#include "define.h"
 
 extern init_parameters init_par;
 
 /* ==================== Bouble sort ======================= */
 
 /* compare record str1 to str2 and change if str1 > str2 */
-void compare_records(readfile *records, size_t i, size_t x){
-
+void compare_records(readfile *records, size_t i, size_t x, int __flags){
+    
     int __scmp = strcmp(records[i].line, records[(x)].line); // 4 3 
-    if (__scmp > 0){
-        strcpy(records[i].tmp, records[i].line);
-        strcpy(records[i].line, records[x].line);
-        strcpy(records[x].line, records[i].tmp);
+    if (__flags & USE_PARAM_B){
+       if (__scmp > 0){ // ascending
+            strcpy(records[i].tmp, records[i].line);
+            strcpy(records[i].line, records[x].line);
+            strcpy(records[x].line, records[i].tmp);
+        }
+    }
+    else if (__flags & USE_PARAM_C){
+         if (__scmp < 0){ //descending   
+            strcpy(records[i].tmp, records[i].line);
+            strcpy(records[i].line, records[x].line);
+            strcpy(records[x].line, records[i].tmp);
+        }
     }
 }
 
-void bouble_sort(readfile *records){
+void bouble_sort(readfile *records, int __flags){
 	
     for (size_t i=0; i < init_par.total_number_row; i++){
         for (size_t x = i+1; x < init_par.total_number_row; x++){
             if (i < (init_par.total_number_row-1) ){
-                compare_records(records, i, x);
+                compare_records(records, i, x, __flags);
             }
         }
     }   

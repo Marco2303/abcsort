@@ -22,22 +22,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "struct.h"
-#include "bouble.h"
-
-#define APP_NAME "abcsort"
-#define VERSION "0.0.1"
-
-#define INPUT_PARAM_I 'i'
-#define INPUT_PARAM_O 'o'
-#define INPUT_PARAM_B 'b'
-
-#define USE_PARAM_I (0 << 1)
-#define USE_PARAM_O (0 << 2)
-#define USE_PARAM_B (0 << 3)
-
+#include "define.h"
 
 init_parameters init_par;
+int __flags = 0;
+
+void print_binary(unsigned int n) {
+    for (int i = sizeof(n) * 8 - 1; i >= 0; i--) {
+        printf("%d", (n >> i) & 1);
+    }
+    printf("\n");
+}
+
 
 /* ===================== Object definition ====================== */
 
@@ -111,33 +107,26 @@ void save_file(readfile *records){
 /* ====================== Input parser ========================== */
 
 
-/* for verify that all parameters of input is ok */ 
+/* for verify that essential parameters is ok */ 
 void flags_control(void){
-    
-    int __flags = 0;
-
-    if (__flags & USE_PARAM_I){
-        printf("Not use PARAM_I\n");
-    }
-    if (!(__flags & USE_PARAM_O)){
+   /* test name of the ouput file and assign default
+   *  name if not found pram -o*/
+   if (!(__flags & USE_PARAM_O)){
         printf("Out filename out.txt\n");
         init_par.filenameout = "out.txt";
     }
-
-   if (__flags & USE_PARAM_B){
-        printf("Not use PARAM_b\n");
+    if (__flags & USE_PARAM_B){
+        printf("Bouble sort ascending MIN to MAX\n");
     }
-
-
+    else if (__flags & USE_PARAM_C){
+        printf("Bouble sort descending MAX to MIN\n");
+    }
 }
-
 //
 //routin for set input parameters
 //
 void parser_param(char **input_param, int len){
-	int __count = 0;
-    int __flags = 0;
-	 
+	int __count = 0; 
 	while (__count < len){
 		char *param = input_param[__count];
 		if (param[0] == '-'){
@@ -167,12 +156,23 @@ void parser_param(char **input_param, int len){
 					}else{printf("Insufficient parameters\n");}
 					break;
 				case INPUT_PARAM_B:
-                    __flags |= USE_PARAM_B;
-                    flags_control();
-					readfile *records = read_file();
-					bouble_sort(records);
-                    save_file(records);
-					break;
+                    {
+                        __flags |= USE_PARAM_B;
+                        flags_control();
+					    readfile *records = read_file();
+					    bouble_sort(records, __flags);
+                        save_file(records);
+					    break;
+                    }
+				case INPUT_PARAM_C:
+                    {
+                        __flags |= USE_PARAM_C;
+                        flags_control();
+					    readfile *records = read_file();
+					    bouble_sort(records, __flags);
+                        save_file(records);
+					    break;
+                    }
 			}
 		}
 		__count++;
@@ -187,12 +187,7 @@ int main(int argc, char **argv){
 	if ( argc > 1 ){
 		parser_param(argv, argc);
 	}else{
-		printf("\tSort - insert param\n");
-		printf("\t====================\n");
-		printf("\t-i name = input file name\n");
-		printf("\t-o name = output file name\n");
-		printf("\t-b = bouble sort\n");
+        help();
 	}
-
 	return 0;
 }

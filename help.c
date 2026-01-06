@@ -18,15 +18,14 @@
  * THE USE OF THIS SOFTWARE.
  */
 
-typedef struct {
-    char *filenamein;
-    char *filenameout;
-    size_t total_number_row;
-} init_parameters;
+#include <stdio.h>
+#include "define.h"
 
-
-typedef struct {
-    char tmp[1024];
-    char line[1024];
-} readfile;
-
+void help(void){
+    printf("\nabcsort version "VERSION"\n");
+    printf("====================\n\n");
+    printf("-i name = input file txt name\n");
+    printf("-o name = output file name (if absent parm name out.txt)\n");
+    printf("-b = bouble sort (ascendent)\n");
+    printf("-c = bouble sort (discendent)\n");
+}

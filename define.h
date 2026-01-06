@@ -18,7 +18,36 @@
  * THE USE OF THIS SOFTWARE.
  */
 
+#define APP_NAME "abcsort"
+#define VERSION "0.0.1"
 
-void compare_recordas(readfile *records, size_t i, size_t x);
-void bouble_sort(readfile *records);
+#define INPUT_PARAM_I 'i'
+#define INPUT_PARAM_O 'o'
+#define INPUT_PARAM_B 'b'
+#define INPUT_PARAM_C 'c'
 
+#define USE_PARAM_I (1 << 1)
+#define USE_PARAM_O (1 << 2)
+#define USE_PARAM_B (1 << 3)
+#define USE_PARAM_C (1 << 4)
+
+
+typedef struct {
+    char *filenamein;
+    char *filenameout;
+    size_t total_number_row;
+} init_parameters;
+
+
+typedef struct {
+    char tmp[1024];
+    char line[1024];
+} readfile;
+
+
+/* ===== Bouble definition ===== */
+void compare_recordas(readfile *records, size_t i, size_t x, int __flags);
+void bouble_sort(readfile *records, int __falgs);
+
+/* ===== Help definition ===== */
+void help(void);
