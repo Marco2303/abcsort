@@ -160,7 +160,7 @@ void parser_param(char **input_param, int len){
                         __flags |= USE_PARAM_B;
                         flags_control();
 					    readfile *records = read_file();
-					    bouble_sort(records, __flags);
+					    bubble_sort(records, __flags);
                         save_file(records);
 					    break;
                     }
@@ -169,7 +169,7 @@ void parser_param(char **input_param, int len){
                         __flags |= USE_PARAM_C;
                         flags_control();
 					    readfile *records = read_file();
-					    bouble_sort(records, __flags);
+					    bubble_sort(records, __flags);
                         save_file(records);
 					    break;
                     }

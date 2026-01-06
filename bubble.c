@@ -47,7 +47,7 @@ void compare_records(readfile *records, size_t i, size_t x, int __flags){
     }
 }
 
-void bouble_sort(readfile *records, int __flags){
+void bubble_sort(readfile *records, int __flags){
 	
     for (size_t i=0; i < init_par.total_number_row; i++){
         for (size_t x = i+1; x < init_par.total_number_row; x++){

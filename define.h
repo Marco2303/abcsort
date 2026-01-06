@@ -47,7 +47,7 @@ typedef struct {
 
 /* ===== Bouble definition ===== */
 void compare_recordas(readfile *records, size_t i, size_t x, int __flags);
-void bouble_sort(readfile *records, int __falgs);
+void bubble_sort(readfile *records, int __falgs);
 
 /* ===== Help definition ===== */
 void help(void);
