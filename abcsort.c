@@ -24,15 +24,17 @@
 #include <stdlib.h>
 #include "define.h"
 
-init_parameters init_par;
 int __flags = 0;
 
-void print_binary(unsigned int n) {
-    for (int i = sizeof(n) * 8 - 1; i >= 0; i--) {
-        printf("%d", (n >> i) & 1);
-    }
-    printf("\n");
-}
+
+/* ========================= Init struct ======================== */
+
+	
+init_parameters init_par = {	
+	.filenamein = NULL,
+    	.filenameout = NULL,
+    	.total_number_row = 0
+};
 
 
 /* ===================== Object definition ====================== */
@@ -53,54 +55,6 @@ void *xrealloc(readfile *read, size_t len){
         fprintf(stderr, "Realloc memory error\n");
     }
     return __temp;
-}
-
-/* ==================== Imput/output file  ======================= */
-
-readfile *read_file(void){
-	
-    char __buffer[1024];
-	size_t __capacity = 2;
-	
-    FILE *__fp = fopen(init_par.filenamein, "r");
-	if (__fp == NULL){
-		printf("File input %s not fount\n", init_par.filenamein);
-		exit(1);
-	}
-	
-	readfile *__read = xmalloc(sizeof(readfile)*__capacity);
-
-	while (fgets(__buffer,sizeof(__buffer),__fp) != NULL){
-		//printf("buffer %s",buffer);
-		if (init_par.total_number_row == __capacity){	// increments 
-			__capacity *= 2;
-			readfile *__tmp = xrealloc(__read, sizeof(readfile)*__capacity);
-			__read = __tmp;
-		}
-
-		strcpy(__read[init_par.total_number_row].line, __buffer);
-
-		init_par.total_number_row++;
-	}
-       	fclose(__fp);
-
-    return __read;	
-}
-
-void save_file(readfile *records){
-    
-    FILE *fp = fopen(init_par.filenameout, "w"); 
-
-    if (fp == NULL){
-        fprintf(stderr, "Save file error\n");
-        exit(1);
-    }
-    
-    for (size_t i=0; i<init_par.total_number_row; i++){
-        fputs( records[i].line, fp );
-    }
-
-    fclose(fp);
 }
 
 
@@ -183,7 +137,7 @@ void parser_param(char **input_param, int len){
 
 
 int main(int argc, char **argv){
- 	
+ 
 	if ( argc > 1 ){
 		parser_param(argv, argc);
 	}else{

@@ -23,7 +23,7 @@
 #include <stdlib.h>
 #include "define.h"
 
-extern init_parameters init_par;
+//extern init_parameters init_par;
 
 /* ==================== Bouble sort ======================= */
 

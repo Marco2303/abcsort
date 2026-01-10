@@ -22,6 +22,7 @@
 #include "define.h"
 
 void help(void){
+    
     printf("\nabcsort version "VERSION"\n");
     printf("====================\n\n");
     printf("-i name = input file txt name\n");

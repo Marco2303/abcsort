@@ -18,6 +18,13 @@
  * THE USE OF THIS SOFTWARE.
  */
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#ifndef DEFINE_H
+#define DEFINE_H
+
 #define APP_NAME "abcsort"
 #define VERSION "0.0.1"
 
@@ -38,12 +45,18 @@ typedef struct {
     size_t total_number_row;
 } init_parameters;
 
+extern init_parameters init_par;
 
 typedef struct {
     char tmp[1024];
     char line[1024];
 } readfile;
 
+/* ===== abcsort definition ===== */
+void *xmalloc(size_t len);
+void *xrealloc(readfile *read, size_t len);
+void flags_control(void);
+void parser_param(char **input_param, int len);
 
 /* ===== Bouble definition ===== */
 void compare_recordas(readfile *records, size_t i, size_t x, int __flags);
@@ -51,3 +64,9 @@ void bubble_sort(readfile *records, int __falgs);
 
 /* ===== Help definition ===== */
 void help(void);
+
+/* ==== Sortio definition ==== */
+readfile *read_file(void);
+void save_file(readfile *records);
+
+#endif
